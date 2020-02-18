@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatingApp.API.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
+    //Enforces attribute routing.  Also auto-validates requests.
     [ApiController]
+   
+    //ControllerBase: controllers inherits from this base class. Gives access to HTTP responses and actions.
+    //Does not have view support. Just Controller has view support. We will not be using it. View Support will be handled by angular.
     public class ValuesController : ControllerBase
     {
         //injects DataContext in controller
@@ -31,6 +37,7 @@ namespace DatingApp.API.Controllers
         }
 
         // GET api/values/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
